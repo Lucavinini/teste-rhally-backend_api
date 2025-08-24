@@ -1,15 +1,15 @@
-const mysql = require('mysql2/promise');
+// Importa a biblioteca do Supabase
+const { createClient } = require('@supabase/supabase-js');
+
+// Importa o dotenv para carregar as variáveis de ambiente
 require('dotenv').config();
 
-const pool = mysql.createPool({
-  host: process.env.DB_HOST,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_NAME,
-  port: process.env.DB_PORT || 3306,
-  waitForConnections: true,
-  connectionLimit: 10,
-  queueLimit: 0
-});
+// Obtém as variáveis de ambiente necessárias
+const supabaseUrl = process.env.SUPABASE_URL;
+const supabaseAnonKey = process.env.SUPABASE_KEY; // Usando SUPABASE_KEY conforme seu .env
 
-module.exports = pool;
+// Cria uma instância do cliente Supabase
+const supabase = createClient(supabaseUrl, supabaseAnonKey);
+
+// Exporta o cliente para que possa ser usado em outros arquivos
+module.exports = supabase;
