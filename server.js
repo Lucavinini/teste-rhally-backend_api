@@ -21,13 +21,13 @@ const startServer = async () => {
             throw new Error(error.message);
         }
 
-        console.log('✅ Conexão com o banco de dados Supabase estabelecida com sucesso!');
+        console.log('Conexão com o banco de dados Supabase estabelecida com sucesso!');
 
         app.listen(port, () => {
             console.log(`Servidor rodando em http://localhost:${port}`);
         });
     } catch (err) {
-        console.error('❌ Erro ao conectar com o banco de dados Supabase:', err.message);
+        console.error('Erro ao conectar com o banco de dados Supabase:', err.message);
         process.exit(1);
     }
 };
