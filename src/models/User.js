@@ -71,6 +71,20 @@ class User {
     return data ? data[0] : null;
   }
 
+  static async delete(id) {
+  const { data, error } = await supabase
+    .from('usuarios')
+    .delete()
+    .eq('id', id)
+    .select('id');
+
+  if (error) {
+    throw error;
+  }
+
+  return data && data.length > 0 ? data[0] : null;
+}
+
 }
 
 module.exports = User;
