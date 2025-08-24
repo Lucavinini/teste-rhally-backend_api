@@ -71,6 +71,7 @@ class User {
     return data ? data[0] : null;
   }
 
+  //delette
   static async delete(id) {
   const { data, error } = await supabase
     .from('usuarios')
@@ -84,7 +85,20 @@ class User {
 
   return data && data.length > 0 ? data[0] : null;
 }
+// Método estático para encontrar um usuário pelo email
+  static async findByEmail(email) {
+    const { data, error } = await supabase
+      .from('usuarios')
+      .select('*') // Pega todas as colunas, incluindo a senha para comparação
+      .eq('email', email)
+      .single(); // Espera um único resultado
 
+    if (error && error.code !== 'PGRST116') { // Ignora erro de "nenhuma linha encontrada"
+      throw error;
+    }
+
+    return data;
+  }
 }
 
 module.exports = User;

@@ -15,4 +15,7 @@ router.put('/users/:id', userController.updateUser);
 // Rota para deletar com base no ID
 router.delete('/users/:id', userController.deleteUser);
 
+// Rota para login de usuário
+router.post('/login', userController.login);
+
 module.exports = router;
