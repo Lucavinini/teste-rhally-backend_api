@@ -1,11 +1,22 @@
-// Importa a aplicação Express configurada do arquivo app.js
 const app = require('./src/app');
+const pool = require('./src/config/database');
 
-// Define a porta em que o servidor irá rodar.
-// Usamos 3001 para não conflitar com o front-end (que geralmente usa a 3000).
-const PORT = 3001;
+const port = process.env.PORT || 3001;
 
-// Inicia o servidor e o faz "escutar" por requisições na porta definida.
-app.listen(PORT, () => {
-  console.log(`Servidor rodando na porta ${PORT}`);
-});
+const startServer = async () => {
+    try {
+        console.log(`Tentando conectar em ${process.env.DB_HOST}:${process.env.DB_PORT} como ${process.env.DB_USER}`);
+        const connection = await pool.getConnection();
+        console.log('✅ Conexão com o banco de dados estabelecida com sucesso!');
+        connection.release();
+
+        app.listen(port, () => {
+            console.log(`Servidor rodando em http://localhost:${port}`);
+        });
+    } catch (err) {
+        console.error('❌ Erro ao conectar com o banco de dados:', err.code, err.message);
+        process.exit(1);
+    }
+};
+
+startServer();
